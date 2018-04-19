@@ -13,6 +13,6 @@ namespace TravelBlog.Models
         public int PersonId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<Experience> Experiences { get; set; }
+        public virtual ICollection<ExperiencesPersons> ExperiencesPersons { get; set; }
     }
 }

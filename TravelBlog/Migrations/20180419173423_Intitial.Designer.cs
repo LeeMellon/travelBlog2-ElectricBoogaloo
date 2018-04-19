@@ -8,9 +8,10 @@ using TravelBlog.Models;
 namespace TravelBlog.Migrations
 {
     [DbContext(typeof(TravelBlogDbContext))]
-    partial class TravelBlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180419173423_Intitial")]
+    partial class Intitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
@@ -25,6 +26,8 @@ namespace TravelBlog.Migrations
                     b.Property<int?>("LocationId");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Title");
 
                     b.Property<DateTime>("TravelDate");
 

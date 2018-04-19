@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TravelBlog.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Intitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,6 @@ namespace TravelBlog.Migrations
                 {
                     table.PrimaryKey("PK_Locations", x => x.LocationId);
                 });
-
 
             migrationBuilder.CreateTable(
                 name: "Persons",
@@ -46,7 +45,6 @@ namespace TravelBlog.Migrations
                     Description = table.Column<string>(nullable: true),
                     LocationId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    PersonId = table.Column<int>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     TravelDate = table.Column<DateTime>(nullable: false)
                 },
@@ -59,12 +57,32 @@ namespace TravelBlog.Migrations
                         principalTable: "Locations",
                         principalColumn: "LocationId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExperiencesPersons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                    ExperienceId = table.Column<int>(nullable: false),
+                    PersonId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExperiencesPersons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Experiences_Persons_PersonId",
+                        name: "FK_ExperiencesPersons_Experiences_ExperienceId",
+                        column: x => x.ExperienceId,
+                        principalTable: "Experiences",
+                        principalColumn: "ExperienceId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExperiencesPersons_Persons_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Persons",
                         principalColumn: "PersonId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -73,21 +91,29 @@ namespace TravelBlog.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Experiences_PersonId",
-                table: "Experiences",
+                name: "IX_ExperiencesPersons_ExperienceId",
+                table: "ExperiencesPersons",
+                column: "ExperienceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExperiencesPersons_PersonId",
+                table: "ExperiencesPersons",
                 column: "PersonId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ExperiencesPersons");
+
+            migrationBuilder.DropTable(
                 name: "Experiences");
 
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "Persons");
 
             migrationBuilder.DropTable(
-                name: "Persons");
+                name: "Locations");
         }
     }
 }

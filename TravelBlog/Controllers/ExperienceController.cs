@@ -25,7 +25,23 @@ namespace TravelBlog.Controllers
         }
         public IActionResult Details(int id)
         {
-            Experience thisExperience = db.Experiences.FirstOrDefault(experiences => experiences.ExperienceId == id);
+            var thisExperience = db.Experiences.FirstOrDefault(experiences => experiences.ExperienceId == id);
+            //var testList = thisExperience.ExperiencesPersons.Count();
+            var PersonList = new List<Person>();
+            //List<ExperiencesPersons> info = db.ExperiencesPersons
+            //    .Include(ep => ep.Experience)
+            //    .ThenInclude(ex => ex.Persons)
+            //    .Where(ep => ep.ExperienceId == id)
+            //    .ToList();
+            //Experience selectedExperience = info[0].Experience;
+            foreach (var person in thisExperience.ExperiencesPersons.ToList())
+            {
+                if (person.ExperienceId == id)
+                {
+                    PersonList.Add(person.Person);
+                }
+            }
+            ViewBag.PersonsList = PersonList;
             return View(thisExperience);
         }
         public IActionResult Create()

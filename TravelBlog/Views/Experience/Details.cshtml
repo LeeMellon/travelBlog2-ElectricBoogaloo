@@ -1,7 +1,8 @@
-﻿
+﻿@model TravelBlog.Models.Experience
 @{
+    ViewData["Title"] = "Experience - Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model TravelBlog.Models.Experience
 
 <html>
 <head>
@@ -10,7 +11,25 @@
 <body>
     <h2>Details</h2>
     <hr />
-    @Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)
+    @Html.DisplayNameFor(model => model.Name)
+    @Html.DisplayFor(model => model.Name)
+    <hr />
+    @Html.DisplayNameFor(model => model.Description)
+    @Html.DisplayFor(model => model.Description)
+    <hr />
+    @Html.DisplayNameFor(model => model.TravelDate)
+    @Html.DisplayFor(model => model.TravelDate)
+    <hr />
+    @Html.DisplayNameFor(model => model.Location)
+    @Html.DisplayFor(model => model.Location)
+    <hr />
+    <label>People</label>
+    @foreach(var person in @Model.Persons)
+    {
+        <p>person.Name</p>
+    }
+
+
     <p>@Html.ActionLink("Back to list", "Index")</p>
 </body>
 </html>
